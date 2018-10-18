@@ -1,0 +1,32 @@
+sudo: required
+
+language: generic
+
+env:
+  OS: linux
+
+services:
+  - docker
+
+addons:
+  apt:
+    sources:
+      - sourceline: "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+        key_url: https://download.docker.com/linux/ubuntu/gpg
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - docker-ce
+
+install:
+  - docker version
+
+before_script:
+  - ls -lah
+
+script:
+  - docker build -t michaeltigr/zebra-selenium-php-travis:latest .
+  - docker login --username $HUB_USERNAME --password $HUB_PASSWORD
+  - docker push michaeltigr/zebra-selenium-php-travis:latest
