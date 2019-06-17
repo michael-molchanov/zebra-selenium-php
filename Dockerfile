@@ -24,6 +24,11 @@ RUN apt-get update \
   python \
   python-pip \
   python-wheel \
+  python3 \
+  python3-pip \
+  python3-setuptools \
+  python3-wheel \
+  python3-dev \
   software-properties-common \
   wget \
   && locale-gen en_US.UTF-8 \
@@ -96,7 +101,15 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # Add composer downloads optimisation.
 RUN composer global require hirak/prestissimo
 
-RUN composer global require drush/drush:^8.2.0
+RUN composer global require drush/drush:8.2.3
+
+ENV ALLURE_HOME /usr
+# See http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/
+ENV ALLURE_VERSION 2.12.1
+RUN curl -o allure-commandline-${ALLURE_VERSION}.tgz -Ls http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.tgz \
+  && tar -zxvf allure-commandline-${ALLURE_VERSION}.tgz -C /opt/ \
+  && ln -s /opt/allure-${ALLURE_VERSION}/bin/allure /usr/bin/allure \
+  && allure --version
 
 COPY entry_point.sh /opt/bin/entry_point.sh
 RUN chmod +x /opt/bin/entry_point.sh
