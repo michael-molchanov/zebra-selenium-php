@@ -1,5 +1,5 @@
 # Selenium + Selenese.
-FROM selenium/standalone-chrome:latest
+FROM selenium/standalone-firefox:latest
 
 LABEL maintainer "Michael Molchanov <mmolchanov@adyax.com>"
 
