@@ -27,6 +27,6 @@ before_script:
   - ls -lah
 
 script:
-  - docker build -t michaeltigr/zebra-selenium-php:latest-travis .
+  - docker build -t michaeltigr/zebra-selenium-php:${TRAVIS_BRANCH}-travis .
   - docker login --username $HUB_USERNAME --password $HUB_PASSWORD
-  - docker push michaeltigr/zebra-selenium-php:latest-travis
+  - docker push michaeltigr/zebra-selenium-php:${TRAVIS_BRANCH}-travis
